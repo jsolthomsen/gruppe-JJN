@@ -8,23 +8,36 @@
           color: white;
           padding: 16px;
           font-size: 16px;
-          border: none;
           cursor: pointer;
-          border-radius: 10px;
+          border-radius: 20px;
+          border: 3px black solid;
+      }
+      .Button:hover {
+        background-color: darkred;
+        opacity: 85%;
+        color: grey;
       }
       #sangListe {
         color: white;
-        border: black 10px;
         font-size: 20px;
+      }
+      body {
+        background-color: orange;
+      }
+      h1 {
+        color: white;
+      }
+      h5 {
+        color: white;
       }
     </style>
 </head>
-<body style="background-color: orange;">
+<body>
 
-<h1 style="color: white;">Fotify - Gruppe JJN</h1>
-<h5 style="color: white;">Velkommen til en vildere og mere featurefyldte musikapp, hvor vi anbefaler de 10 varmeste albumtracks hver UGE!</h5>
+<h1>Fotify - Gruppe JJN</h1>
+<h5>Velkommen til en vildere og mere featurefyldte musikapp, hvor vi anbefaler de 10 varmeste albumtracks hver UGE!</h5>
 
-
+<!--De forskellige knapper til at viser albummer efter genre-->
 <button class="Button" id="rockKnap">Vis Rock</button>
 <button class="Button" id="funkKnap">Vis Funk</button>
 <button class="Button" id="soundtrackKnap">Vis Soundtrack</button>
@@ -39,9 +52,11 @@
 fetch("albums.json")
   .then(response => response.json())
   .then(data => {
-
+    // Logger dataen for at se om den er iorden
     console.log(data); 
 
+    // Funktion som viser de sange som har en bestemt genre, alt efter hvilken knap man trykker på
+    // Funktionen tager en "genre" som korresponderer med den knap som man trykker på
     function visSangeMedGenre(genre) {
         document.getElementById("sangListe").innerHTML = "";
 
@@ -51,11 +66,10 @@ fetch("albums.json")
                 albumNameElement.textContent = "Albumnavn: " + data[i].albumName + " -- Artistnavn: " + data[i].artistName;
 
                 document.getElementById("sangListe").appendChild(albumNameElement);
-                console.log(albumNameElement);
             }
         }
     }
-
+    // Gør det samme som funktionen ovenover, men if-statement er altid true og viser derfor alle sange
     function visAlleSange() {
         document.getElementById("sangListe").innerHTML = "";
 
@@ -69,6 +83,7 @@ fetch("albums.json")
         }
     }
 
+    // Sætter en Event Listener på hver knap som har den enkelte genre
     document.getElementById("rockKnap").addEventListener("click", function () {
         visSangeMedGenre("Rock");
     });
@@ -94,7 +109,7 @@ fetch("albums.json")
     });
   })
 
-
+// Tak for magien Thomas :)
 async function fetchContent(url) {
     let request = await fetch(url);
     let json = await request.json();
