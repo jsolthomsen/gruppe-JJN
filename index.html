@@ -1,9 +1,105 @@
 <!DOCTYPE html>
+<html>
 <head>
-<h1>CD projekt</h1>
+    <title>Sang Genre Filter</title>
+    <style>
+      .Button {
+        background-color: red;
+          color: white;
+          padding: 16px;
+          font-size: 16px;
+          border: none;
+          cursor: pointer;
+          border-radius: 10px;
+      }
+      #sangListe {
+        color: white;
+        border: black 10px;
+        font-size: 20px;
+      }
+    </style>
 </head>
-<body>
+<body style="background-color: orange;">
 
-    <script src="/script.js"></script>
+<h1 style="color: white;">Fotify - Gruppe JJN</h1>
+<h5 style="color: white;">Velkommen til en vildere og mere featurefyldte musikapp, hvor vi anbefaler de 10 varmeste albumtracks hver UGE!</h5>
 
+
+<button class="Button" id="rockKnap">Vis Rock</button>
+<button class="Button" id="funkKnap">Vis Funk</button>
+<button class="Button" id="soundtrackKnap">Vis Soundtrack</button>
+<button class="Button" id="alternativeKnap">Vis Alternative</button>
+<button class="Button" id="popKnap">Vis Pop</button>
+<button class="Button" id="visAlleKnap">Vis alle</button>
+
+
+<ul id="sangListe"></ul>
+
+<script>
+fetch("albums.json")
+  .then(response => response.json())
+  .then(data => {
+
+    console.log(data); 
+
+    function visSangeMedGenre(genre) {
+        document.getElementById("sangListe").innerHTML = "";
+
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].genre === genre) {
+                let albumNameElement = document.createElement("li");
+                albumNameElement.textContent = "Albumnavn: " + data[i].albumName + " -- Artistnavn: " + data[i].artistName;
+
+                document.getElementById("sangListe").appendChild(albumNameElement);
+                console.log(albumNameElement);
+            }
+        }
+    }
+
+    function visAlleSange() {
+        document.getElementById("sangListe").innerHTML = "";
+
+        for (var i = 0; i < data.length; i++) {
+            if (data[i]) {
+                let visAlleSangeElement = document.createElement("li");
+                visAlleSangeElement.textContent = "Albumnavn: " + data[i].albumName + " -- Artistnavn: " + data[i].artistName;
+
+                document.getElementById("sangListe").appendChild(visAlleSangeElement);
+            }
+        }
+    }
+
+    document.getElementById("rockKnap").addEventListener("click", function () {
+        visSangeMedGenre("Rock");
+    });
+
+    document.getElementById("funkKnap").addEventListener("click", function () {
+        visSangeMedGenre("Funk");
+    });
+
+    document.getElementById("soundtrackKnap").addEventListener("click", function () {
+        visSangeMedGenre("Soundtrack");
+    });
+
+    document.getElementById("alternativeKnap").addEventListener("click", function () {
+        visSangeMedGenre("Alternative");
+    });
+
+    document.getElementById("popKnap").addEventListener("click", function () {
+        visSangeMedGenre("Pop");
+    });
+
+    document.getElementById("visAlleKnap").addEventListener("click", function () {
+        visAlleSange();
+    });
+  })
+
+
+async function fetchContent(url) {
+    let request = await fetch(url);
+    let json = await request.json();
+    return json;
+};
+</script>
 </body>
+</html>
